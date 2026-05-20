@@ -1,6 +1,23 @@
 # Budgetly
 A Mobile Budget Tracker Application
 
+## Setup Guide
+- Clone the repository
+```bash
+git clone https://github.com/valjhoncine/Budget_Tracker.git;
+cd Budget_Tracker;
+```
+- Install Dependencies
+```bash
+npm install;
+npx expo install;
+```
+- Run the application
+```bash
+npx expo start;
+```
+- Press (a) to open android application.
+
 ## Project Description
 - Budgetly is a mobile application built with React Native (Expo) that allows users to monitor their personal finances. It enables users to record income and expenses, view transaction history, and analyze monthly spending patterns. 
 
@@ -10,16 +27,24 @@ A Mobile Budget Tracker Application
 - Secure email and password authentication and user sessions are persisted across app restarts. 
 
 ### Add Income or Expense
-- Users can log transactions with a title, amount, 
-type(income/expense), and category (e.g. Food, Salary, Bills, Transport).
+Users can add transactions with:
+- Title
+- Amount
+- Type (Income or Expense)
+- Category (Food, Salary, Bills, Transport, etc.)
 
 ### Dashboard
 - An overview displaying total balance, total income, and total expenses computed from all transactions. 
 
 ### Transaction History 
-- A list of all transactions ordered by date, with each entry showing its title, category, 
-date, and amount.
+Shows all transactions ordered by date.
 
+Each transaction contains:
+- Title
+- Category
+- Date
+- Amount
+  
 ### Delete Transaction 
 - Users can remove any transaction with a confirmation prompt. Summary Transactions - are maybe grouped by month, displaying income, expense, and net balance per month with an income-vs-expense progress bar. 
 
