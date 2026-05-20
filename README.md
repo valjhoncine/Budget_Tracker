@@ -1,4 +1,4 @@
-# Budgetly
+# Budget Tracker
 A Mobile Budget Tracker Application
 
 ## Setup Guide
