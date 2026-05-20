@@ -1,12 +1,12 @@
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase/config';
@@ -15,19 +15,23 @@ export default function DashboardScreen() {
   const { user, logout } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
+    if (!user) return;
+
     const q = query(
       collection(db, 'transactions'),
       where('uid', '==', user.uid),
       orderBy('createdAt', 'desc')
     );
+
     const unsub = onSnapshot(q, (snap) => {
       setTransactions(snap.docs.map(d => ({ id: d.id, ...d.data() })));
       setLoading(false);
     });
+
     return unsub;
-  }, []);
+  }, [user]);
+  if (!user) return null;
 
   const income = transactions
     .filter(t => t.type === 'income')
@@ -45,7 +49,7 @@ export default function DashboardScreen() {
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Hello! 👋</Text>
-          <Text style={styles.email}>{user.email}</Text>
+          <Text style={styles.email}>{user?.email}</Text>
         </View>
         <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
           <Text style={styles.logoutText}>Logout</Text>
@@ -90,7 +94,7 @@ export default function DashboardScreen() {
               <Text style={styles.txMeta}>{t.category}</Text>
             </View>
             <Text style={[styles.txAmount,
-              t.type === 'income' ? styles.incomeText : styles.expenseText]}>
+            t.type === 'income' ? styles.incomeText : styles.expenseText]}>
               {t.type === 'income' ? '+' : '-'}₱{t.amount.toFixed(2)}
             </Text>
           </View>
