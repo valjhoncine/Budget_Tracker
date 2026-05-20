@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    StyleSheet,
-    Text, TextInput, TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text, TextInput, TouchableOpacity,
+  View,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
@@ -21,7 +21,34 @@ export default function LoginScreen({ navigation }) {
     try {
       await login(email.trim(), password);
     } catch (e) {
-      Alert.alert('Login Failed', e.message);
+      let error = 'Something went wrong.';
+
+      switch (e.code) {
+        case 'auth/invalid-credential':
+          error = 'Invalid email or password.';
+          break;
+
+        case 'auth/user-not-found':
+          error = 'No account found with this email.';
+          break;
+
+        case 'auth/wrong-password':
+          error = 'Incorrect password.';
+          break;
+
+        case 'auth/invalid-email':
+          error = 'Email format is invalid.';
+          break;
+
+        case 'auth/too-many-requests':
+          error = 'Too many attempts. Try again later.';
+          break;
+
+        default:
+          error = e.error;
+      }
+
+      Alert.alert('Login Failed', error);
     } finally {
       setLoading(false);
     }
